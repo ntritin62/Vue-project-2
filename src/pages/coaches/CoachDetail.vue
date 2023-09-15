@@ -1,4 +1,4 @@
 <template>
-  <section>123</section>
-  <section>123</section>
+  <router-view></router-view>
+  <router-link to="/coaches/c1/contact">Contact</router-link>
 </template>
