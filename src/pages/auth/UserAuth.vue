@@ -2,14 +2,17 @@
   <base-card>
     <form @submit.prevent="submitForm">
       <div class="form-control">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="email" />
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" v-model.trim="email" />
       </div>
       <div class="form-control">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="password" />
+        <input type="password" id="password" v-model.trim="password" />
       </div>
-      <p v-if="!formIsValid">Please check email and password again</p>
+      <p v-if="!formIsValid">
+        Please enter a valid email and password (must be at least 6 characters
+        long).
+      </p>
       <base-button>{{ submitButtonCaption }}</base-button>
       <base-button type="button" mode="flat" @click="switchAuthMode">{{
         switchModeButtonCaption
@@ -55,6 +58,15 @@ export default {
         this.formIsValid = false;
         return;
       }
+
+      if (this.mode === 'login') {
+        // ...
+      } else {
+        this.$store.dispatch('signup', {
+          email: this.email,
+          password: this.password,
+        });
+      }
     },
     switchAuthMode() {
       if (this.mode === 'login') {
@@ -70,7 +82,6 @@ export default {
 <style scoped>
 form {
   margin: 1rem;
-  border-radius: 12px;
   padding: 1rem;
 }
 
